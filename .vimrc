@@ -1,7 +1,6 @@
 set sw=4
 set ts=4
 set et
-set smarttab
 set smartindent
 set lbr
 set fo+=mB
@@ -19,8 +18,7 @@ au FileType javascript setlocal dict+=~/.vim/dict/javascript.dict
 au FileType html setlocal dict+=~/.vim/dict/javascript.dict
 au FileType html setlocal dict+=~/.vim/dict/css.dict
 
-"
-"syntastic相关
+"" syntastic相关
 execute pathogen#infect()
 let g:syntastic_python_checkers=['pylint']
 let g:syntastic_php_checkers=['php', 'phpcs', 'phpmd']
@@ -28,9 +26,8 @@ let g:syntastic_php_checkers=['php', 'phpcs', 'phpmd']
 "Processing... % (ctrl+c to stop)
 let g:fencview_autodetect=0
 set rtp+=$GOROOT/misc/vim
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" 显示相关  
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+"" 显示相关  
 syntax on
 set cul "高亮光标所在行
 "set cuc
@@ -48,71 +45,65 @@ set showcmd         " 输入的命令显示出来，看的清楚些
 set scrolloff=3     " 光标移动到buffer的顶部和底部时保持3行距离  
 set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}]\ [TYPE=%Y]\ [POS=%l,%v][%p%%]\ %{strftime(\"%d/%m/%y\ -\ %H:%M\")}   "状态行显示的内容  
 set laststatus=2    " 启动显示状态行(1),总是显示状态行(2)  
+
+
+"" 代码折叠
 "set foldenable      " 允许折叠  
-""set foldmethod=manual   " 手动折叠  
-set nocompatible  "去掉讨厌的有关vi一致性模式，避免以前版本的一些bug和局限  
-" 显示中文帮助
+"set foldmethod=manual   " 手动折叠  
+set foldmethod=indent 
+"set foldcolumn=0
+"set foldlevel=3 
+
+"" 显示中文帮助
 if version >= 603
 	set helplang=cn
 	set encoding=utf-8
 endif
-" 自动缩进
-set autoindent
-set cindent
-" Tab键的宽度
-set tabstop=4
-" 统一缩进为4
-set softtabstop=4
-set shiftwidth=4
-" 使用空格代替制表符
-set expandtab
-" 在行和段开始处使用制表符
-set smarttab
-" 显示行号
-set number
-" 历史记录数
-set history=1000
-"搜索逐字符高亮
-set hlsearch
-set incsearch
-"语言设置
-set langmenu=zh_CN.UTF-8
-set helplang=cn
-" 总是显示状态行
-set cmdheight=2
-" 侦测文件类型
-filetype on
-" 载入文件类型插件
-filetype plugin on
-" 为特定文件类型载入相关缩进文件
-filetype indent on
-" 保存全局变量
-set viminfo+=!
-" 带有如下符号的单词不要被换行分割
-set iskeyword+=_,$,@,%,#,-
-" 字符间插入的像素行数目
 
-"markdown配置
+"" 制表符缩进
+set autoindent " 自动缩进
+set cindent
+set tabstop=4 " Tab键的宽度
+set softtabstop=4 " 统一缩进为4
+set shiftwidth=4
+set expandtab " 使用空格代替制表符
+set smarttab " 在行和段开始处使用制表符
+
+set number " 显示行号
+set history=1000 " 历史记录数
+
+set hlsearch "搜索逐字符高亮
+set incsearch
+
+set langmenu=zh_CN.UTF-8 "" 语言设置
+
+set cmdheight=2 " 总是显示状态行
+
+filetype on " 侦测文件类型
+filetype plugin on " 载入文件类型插件
+filetype indent on " 为特定文件类型载入相关缩进文件
+
+set viminfo+=! " 保存全局变量
+set iskeyword+=.,_,$,@,%,#,- " 带有如下符号的单词不要被换行分割
+
+"" markdown配置
 au BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn}   set filetype=mkd
 au BufRead,BufNewFile *.{go}   set filetype=go
 au BufRead,BufNewFile *.{js}   set filetype=javascript
-"rkdown to HTML  
+
+"" markdown to HTML  
 nmap md :!~/.vim/markdown.pl % > %.html <CR><CR>
 nmap fi :!firefox %.html & <CR><CR>
 nmap \ \cc
 vmap \ \cc
 
-"将tab替换为空格
+"" 将tab替换为空格
 nmap tt :%s/\t/    /g<CR>
 
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"""""新文件标题
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"新建.c,.h,.sh,.java文件，自动插入文件头 
+"" 新文件标题
+"" 新建.c,.h,.sh,.java文件，自动插入文件头 
 autocmd BufNewFile *.cpp,*.[ch],*.sh,*.rb,*.java,*.py exec ":call SetTitle()" 
-""定义函数SetTitle，自动插入文件头 
+"" 定义函数SetTitle，自动插入文件头 
 func SetTitle() 
 	"如果文件类型为.sh文件 
 	if &filetype == 'sh' 
@@ -162,9 +153,7 @@ endfunc
 autocmd BufNewFile * normal G
 
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"键盘命令
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"" 键盘命令
 :nmap <silent> <F9> <ESC>:Tlist<RETURN>
 " shift tab pages
 map <S-Left> :tabp<CR>
@@ -177,6 +166,7 @@ map <C-w> <C-w>w
 imap <C-k> <C-y>,
 imap <C-t> <C-q><TAB>
 imap <C-j> <ESC>
+
 " 选中状态下 Ctrl+c 复制
 "map <C-v> "*pa
 imap <C-v> <Esc>"*pa
@@ -187,8 +177,6 @@ vmap <C-c> "+y
 " 可以在buffer的任何地方使用鼠标（类似office中在工作区双击鼠标定位）
 "set mouse=a
 set mouse=v
-
-set clipboard=unnamed
 
 "去空行  
 nnoremap <F2> :g/^\s*$/d<CR> 
@@ -272,17 +260,17 @@ endfunc
 "结束定义FormartSrc
 
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 ""实用设置
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 if has("autocmd")
       autocmd BufReadPost *
           \ if line("'\"") > 0 && line("'\"") <= line("$") |
           \   exe "normal g`\"" |
           \ endif
 endif
+
 "当打开vim且没有文件时自动打开NERDTree
 autocmd vimenter * if !argc() | NERDTree | endif
+
 " 只剩 NERDTree时自动关闭
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
@@ -290,32 +278,25 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTree
 set autoread
 " quickfix模式
 autocmd FileType c,cpp map <buffer> <leader><space> :w<cr>:make<cr>
-"代码补全 
-set completeopt=preview,menu 
-"允许插件  
-"filetype plugin on
-"共享剪贴板  
-"set clipboard+=unnamed 
-"自动保存
-set autowrite
-"set cursorline              " 突出显示当前行
+
+set completeopt=preview,menu  "代码补全 
+set completeopt=longest,menu "打开文件类型检测, 加了这句才可以用智能补全
+  
+set clipboard+=unnamed "共享剪贴板
+
+set autowrite "自动保存
+set cursorline              " 突出显示当前行
 set magic                   " 设置魔术
 set guioptions-=T           " 隐藏工具栏
 set guioptions-=m           " 隐藏菜单栏
-""set foldcolumn=0
-""set foldmethod=indent 
-""set foldlevel=3 
-" 不要使用vi的键盘模式，而是vim自己的
-set nocompatible
-" 去掉输入错误的提示声音
-set noeb
-" 在处理未保存或只读文件的时候，弹出确认
-set confirm
-"禁止生成临时文件
-set nobackup
+
+set nocompatible " 不要使用vi的键盘模式，而是vim自己的
+set noeb " 去掉输入错误的提示声音
+
+set confirm " 在处理未保存或只读文件的时候，弹出确认
+set nobackup "禁止生成临时文件
 set noswapfile
-"搜索忽略大小写
-set ignorecase smartcase
+set ignorecase smartcase "搜索智能区分大小写
 
 
 set linespace=0
@@ -331,42 +312,26 @@ set report=0 " 通过使用: commands命令，告诉我们文件的哪一行被�
 set fillchars=vert:\ ,stl:\ ,stlnc:\  " 在被分割的窗口间显示空白，便于阅读
 
 set showmatch " 高亮显示匹配的括号
-
 set matchtime=1 " 匹配括号高亮的时间（单位是十分之一秒）
-
 set scrolloff=3 " 光标移动到buffer的顶部和底部时保持3行距离
-filetype plugin indent on 
-"打开文件类型检测, 加了这句才可以用智能补全
-set completeopt=longest,menu
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" CTags的设定  
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let Tlist_Sort_Type = "name"    " 按照名称排序  
-let Tlist_Use_Right_Window = 1  " 在右侧显示窗口  
-let Tlist_Compart_Format = 1    " 压缩方式  
-let Tlist_Exist_OnlyWindow = 1  " 如果只有一个buffer，kill窗口也kill掉buffer  
-""let Tlist_File_Fold_Auto_Close = 0  " 不要关闭其他文件的tags  
-""let Tlist_Enable_Fold_Column = 0    " 不要显示折叠树  
-"let Tlist_Show_One_File=1            "不同时显示多个文件的tag，只显示当前文件的
+
 "设置tags  
 set tags=tags;  
 set autochdir 
+let Tlist_Auto_Open=0 " 默认打开Taglist 
+let Tlist_Sort_Type = "name"    " 按照名称排序  
+let Tlist_Compart_Format = 1    " 压缩方式  
+let Tlist_Exist_OnlyWindow = 1  " 如果只有一个buffer，kill窗口也kill掉buffer  
+""let Tlist_Enable_Fold_Column = 0    " 不要显示折叠树  
 
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"其他东东
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"默认打开Taglist 
-let Tlist_Auto_Open=0 
-"""""""""""""""""""""""""""""" 
-" Tag list (ctags) 
-"""""""""""""""""""""""""""""""" 
 let Tlist_Ctags_Cmd = '/usr/local/bin/ctags' 
 let Tlist_Show_One_File = 1 "不同时显示多个文件的tag，只显示当前文件的 
 let Tlist_File_Fold_Auto_Close = 1
+"let Tlist_File_Fold_Auto_Close = 0  " 不要关闭其他文件的tags  
 let Tlist_Exit_OnlyWindow = 1 "如果taglist窗口是最后一个窗口，则退出vim 
 let Tlist_Use_Right_Window = 1 "在右侧窗口中显示taglist窗口
-" minibufexpl插件的一般设置
+
+"" minibufexpl插件的一般设置
 let g:miniBufExplMapWindowNavVim = 1
 let g:miniBufExplMapWindowNavArrows = 1
 let g:miniBufExplMapCTabSwitchBufs = 1
@@ -383,26 +348,20 @@ let g:miniBufExplMapCTabSwitchBufs = 1
 let g:miniBufExplModSelTarget = 1
 
 
-set iskeyword+=.
 set termencoding=utf-8
 set encoding=utf8
 set fileencodings=utf8,ucs-bom,gbk,cp936,gb2312,gb18030
 
 autocmd FileType python set omnifunc=pythoncomplete#Complete
 
-"set nocompatible               " be iMproved
 "filetype off                   " required!
 
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 
-" let Vundle manage Vundle
-" required! 
 Bundle 'gmarik/vundle'
 
-" My Bundles here:
-"
-" original repos on github
+"" original repos on github
 Bundle 'tpope/vim-fugitive'
 Bundle 'rstacruz/sparkup', {'rtp': 'vim/'}
 Bundle 'Yggdroot/indentLine'
@@ -411,7 +370,8 @@ let g:indentLine_char = '┊'
 " vim-scripts repos
 Bundle 'L9'
 Bundle 'FuzzyFinder'
-" non github repos
+
+"" non github repos
 Bundle 'https://github.com/wincent/command-t.git'
 Bundle 'Auto-Pairs'
 Bundle 'python-imports.vim'
@@ -431,21 +391,18 @@ Bundle 'ctrlp.vim'
 Bundle 'tacahiroy/ctrlp-funky'
 Bundle 'jsbeautify'
 Bundle 'The-NERD-Commenter'
-"django
+
+""django
 Bundle 'django_templates.vim'
 Bundle 'Django-Projects'
 
 "Bundle 'FredKSchott/CoVim'
 "Bundle 'djangojump'
-" ...
 let g:html_indent_inctags = "html,body,head,tbody"
 let g:html_indent_script1 = "inc"
 let g:html_indent_style1 = "inc"
 
-filetype plugin indent on     " required!
-"
-"ctrlp设置
-"
+"" ctrlp设置
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.png,*.jpg,*.gif     " MacOSX/Linux
 set wildignore+=*\\tmp\\*,*.swp,*.zip,*.exe,*.pyc,*.png,*.jpg,*.gif  " Windows
 
@@ -454,3 +411,4 @@ let g:ctrlp_custom_ignore = '\v\.(exe|so|dll)$'
 let g:ctrlp_extensions = ['funky']
 
 let NERDTreeIgnore=['\.pyc']
+
