@@ -33,7 +33,7 @@ set rtp+=$GOROOT/misc/vim
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 syntax on
 set cul "高亮光标所在行
-set cuc
+"set cuc
 set shortmess=atI   " 启动的时候不显示那个援助乌干达儿童的提示  
 set go=             " 不要图形按钮  
 "color desert     " 设置背景主题  
@@ -183,20 +183,29 @@ imap <C-v> <Esc>"*pa
 imap <C-a> <Esc>^
 imap <C-e> <Esc>$
 vmap <C-c> "+y
+
+" 可以在buffer的任何地方使用鼠标（类似office中在工作区双击鼠标定位）
+"set mouse=a
 set mouse=v
-"set clipboard=unnamed
+
+set clipboard=unnamed
+
 "去空行  
 nnoremap <F2> :g/^\s*$/d<CR> 
+
 "比较文件  
 nnoremap <C-F2> :vert diffsplit 
 "nnoremap <Leader>fu :CtrlPFunky<Cr>
 "nnoremap <C-n> :CtrlPFunky<Cr>
+
 "列出当前目录文件  
 map <F3> :NERDTreeToggle<CR>
 imap <F3> <ESC> :NERDTreeToggle<CR>
+
 "打开树状文件目录  
 map <C-F3> \be  
 :autocmd BufRead,BufNewFile *.dot map <F5> :w<CR>:!dot -Tjpg -o %<.jpg % && eog %<.jpg  <CR><CR> && exec "redr!"
+
 "C，C++ 按F5编译运行
 map <F5> :call CompileRunGcc()<CR>
 func! CompileRunGcc()
@@ -289,7 +298,6 @@ set completeopt=preview,menu
 "set clipboard+=unnamed 
 "自动保存
 set autowrite
-"set ruler                   " 打开状态栏标尺
 "set cursorline              " 突出显示当前行
 set magic                   " 设置魔术
 set guioptions-=T           " 隐藏工具栏
@@ -307,49 +315,26 @@ set confirm
 set nobackup
 set noswapfile
 "搜索忽略大小写
-set ignorecase
-
-
+set ignorecase smartcase
 
 
 set linespace=0
-" 增强模式中的命令行自动完成操作
-set wildmenu
-" 使回格键（backspace）正常处理indent, eol, start等
-set backspace=2
-" 允许backspace和光标键跨越行边界
-set whichwrap+=<,>,h,l
-" 可以在buffer的任何地方使用鼠标（类似office中在工作区双击鼠标定位）
-set mouse=a
+
+set wildmenu " 增强模式中的命令行自动完成操作
+
+set backspace=2 " 使回格键（backspace）正常处理indent, eol, start等
 set selection=exclusive
 set selectmode=mouse,key
-" 通过使用: commands命令，告诉我们文件的哪一行被改变过
-set report=0
-" 在被分割的窗口间显示空白，便于阅读
-set fillchars=vert:\ ,stl:\ ,stlnc:\
-" 高亮显示匹配的括号
-set showmatch
-" 匹配括号高亮的时间（单位是十分之一秒）
-set matchtime=1
-" 光标移动到buffer的顶部和底部时保持3行距离
-set scrolloff=3
-" 为C程序提供自动缩进
-"自动补全
-"":inoremap ( ()<ESC>i
-"":inoremap ) <c-r>=ClosePair(')')<CR>
-":inoremap { {<CR>}<ESC>O
-":inoremap } <c-r>=ClosePair('}')<CR>
-"":inoremap [ []<ESC>i
-"":inoremap ] <c-r>=ClosePair(']')<CR>
-"":inoremap " ""<ESC>i
-"":inoremap ' ''<ESC>i
-""function! ClosePair(char)
-""	if getline('.')[col('.') - 1] == a:char
-""		return "\<Right>"
-""	else
-""		return a:char
-""	endif
-""endfunction
+
+set report=0 " 通过使用: commands命令，告诉我们文件的哪一行被改变过
+
+set fillchars=vert:\ ,stl:\ ,stlnc:\  " 在被分割的窗口间显示空白，便于阅读
+
+set showmatch " 高亮显示匹配的括号
+
+set matchtime=1 " 匹配括号高亮的时间（单位是十分之一秒）
+
+set scrolloff=3 " 光标移动到buffer的顶部和底部时保持3行距离
 filetype plugin indent on 
 "打开文件类型检测, 加了这句才可以用智能补全
 set completeopt=longest,menu
