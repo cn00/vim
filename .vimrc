@@ -28,17 +28,17 @@ let g:fencview_autodetect=0
 set rtp+=$GOROOT/misc/vim
 
 "" 显示相关  
-syntax on
-set cul "高亮光标所在行
+"syntax on
+"set cul "高亮光标所在行
 "set cuc
 set shortmess=atI   " 启动的时候不显示那个援助乌干达儿童的提示  
-set go=             " 不要图形按钮  
-"color desert     " 设置背景主题  
-color ron     " 设置背景主题  
+"set go=             " 不要图形按钮  
+color desert     " 设置背景主题  
+"color ron     " 设置背景主题  
 "color torte     " 设置背景主题  
 "set guifont=Courier_New:h10:cANSI   " 设置字体  
 "autocmd InsertLeave * se nocul  " 用浅色高亮当前行  
-autocmd InsertEnter * se cul    " 用浅色高亮当前行  
+"autocmd InsertEnter * se cul    " 用浅色高亮当前行  
 set ruler           " 显示标尺  
 set showcmd         " 输入的命令显示出来，看的清楚些  
 "set whichwrap+=<,>,h,l   " 允许backspace和光标键跨越行边界(不建议)  
